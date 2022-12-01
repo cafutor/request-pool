@@ -1,0 +1,30 @@
+{
+  "name": "request-pool",
+  "version": "1.0.0",
+  "description": "library for limit the maximum number of requests",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cafutor/request-pool.git"
+  },
+  "keywords": [
+    "request",
+    "pool",
+    "request-pool",
+    "requestpool"
+  ],
+  "author": "huangtao",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cafutor/request-pool/issues"
+  },
+  "homepage": "https://github.com/cafutor/request-pool#readme",
+  "devDependencies": {
+    "eslint": "^8.28.0",
+    "eslint-config-google": "^0.14.0",
+    "jest": "^29.3.1"
+  }
+}
