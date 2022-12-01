@@ -2,7 +2,7 @@
 
 ### useage
 ```javascript
-    import RequestPool from 'request-pool';
+    import RequestPool from 'request-limit-pool';
 
     //set the maximum number of requests to 3. default is 3.
     const requestPool=new RequestPool(3);
