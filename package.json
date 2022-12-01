@@ -1,6 +1,6 @@
 {
   "name": "request-limit-pool",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "library for limit the maximum number of requests",
   "main": "index.js",
   "scripts": {
