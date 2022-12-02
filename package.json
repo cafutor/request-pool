@@ -1,10 +1,11 @@
 {
   "name": "request-limit-pool",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "library for limit the maximum number of requests",
-  "main": "index.js",
+  "main": "/lib/index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "rm -rf lib && gulp"
   },
   "repository": {
     "type": "git",
@@ -23,8 +24,15 @@
   },
   "homepage": "https://github.com/cafutor/request-pool#readme",
   "devDependencies": {
+    "@babel/core": "^7.20.5",
     "eslint": "^8.28.0",
     "eslint-config-google": "^0.14.0",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-uglify": "^3.0.2",
     "jest": "^29.3.1"
+  },
+  "dependencies": {
+    "@babel/preset-env": "^7.20.2"
   }
 }

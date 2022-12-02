@@ -1,4 +1,4 @@
-const RequestPool=require('../index.js');
+const RequestPool=require('../lib/index.js');
 
 const requestPool=new RequestPool(3);
 
