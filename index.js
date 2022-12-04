@@ -1,4 +1,4 @@
-const errorObj = require('./constant');
+import errorObj from './constant';
 
 export const isNumber = (num) => {
   if (Object.prototype.toString.call(num) !== '[object Number]') return false;
