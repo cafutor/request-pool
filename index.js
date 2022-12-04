@@ -1,34 +1,47 @@
+const errorObj = require('./constant');
 
+export const isNumber = (num) => {
+  if (Object.prototype.toString.call(num) !== '[object Number]') return false;
+  const j = 0;
+  if (num + j - num !== j) return false;
+  return true;
+};
 
-const errorObj=require('./constant');
+export const isMinusOrZero = (num) => {
+  if (num < 1) return true;
+  return false;
+};
+
 /**
  * request pool
  * @param{number} maxRequestNum
  * */
-function RequestPool(maxRequestNum) {
-  this.maxRequestNum=maxRequestNum||3;
-  this.currentRequestNum=0;
-  this.requestQueue=[];
-  this.done=(cb)=>{
-    if (Object.prototype.toString.call(cb)!=='[object Function]') {
+function RequestPool(maxRequestNum = 3) {
+  if (!isNumber(maxRequestNum)) throw new Error(errorObj.nanError);
+  if (isMinusOrZero(maxRequestNum)) throw new Error(errorObj.naMinusOrZero);
+  this.maxRequestNum = maxRequestNum;
+  this.currentRequestNum = 0;
+  this.requestQueue = [];
+  this.done = (cb) => {
+    if (Object.prototype.toString.call(cb) !== '[object Function]') {
       throw new Error(errorObj.doneCbError);
     }
-    this.doneCb=cb;
+    this.doneCb = cb;
   };
-  this.push=(request)=>{
-    if (this.currentRequestNum<this.maxRequestNum) {
-      const processing=request();
+  this.push = (request) => {
+    if (this.currentRequestNum < this.maxRequestNum) {
+      const processing = request();
       if (!processing instanceof Promise) {
         throw new Error(errorObj.insError);
       }
       this.currentRequestNum++;
-      processing.finally(()=>{
+      processing.finally(() => {
         this.currentRequestNum--;
-        if (this.requestQueue.length!==0) {
-          const nextReq=this.requestQueue.pop();
+        if (this.requestQueue.length !== 0) {
+          const nextReq = this.requestQueue.pop();
           this.push(nextReq);
         }
-        if (this.currentRequestNum===0&&this.doneCb) {
+        if (this.currentRequestNum === 0 && this.doneCb) {
           this.doneCb();
         }
       });
@@ -38,4 +51,4 @@ function RequestPool(maxRequestNum) {
   };
 }
 
-module.exports=RequestPool;
+export default RequestPool;
