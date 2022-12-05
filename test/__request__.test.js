@@ -11,7 +11,7 @@ const requests = Array.apply(null, { length: 5 }).map(() => () =>
   })
 );
 
-test('isNumber', (done) => {
+test('isNumber', () => {
   expect(isNumber(0)).toBeTruthy();
   expect(isNumber(NaN)).toBeFalsy();
   expect(isNumber(undefined)).toBeFalsy();
@@ -21,17 +21,15 @@ test('isNumber', (done) => {
   expect(isNumber(() => {})).toBeFalsy();
   expect(isNumber({})).toBeFalsy();
   expect(isNumber([])).toBeFalsy();
-  done();
 });
 
-test('not a minus or zero', (done) => {
+test('not a minus or zero', () => {
   expect(isMinusOrZero(0)).toBeTruthy();
   expect(isMinusOrZero(-1)).toBeTruthy();
   expect(isMinusOrZero(1)).toBeFalsy();
-  done();
 });
 
-test('The requests are executed sequentially', () => {
+test('the requests are executed sequentially', () => {
   requests.forEach((request) => {
     requestPool.push(request);
   });

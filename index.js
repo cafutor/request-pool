@@ -1,4 +1,4 @@
-import errorObj from './constant';
+import ErrorObj from './constant';
 
 export const isNumber = (num) => {
   if (Object.prototype.toString.call(num) !== '[object Number]') return false;
@@ -17,14 +17,14 @@ export const isMinusOrZero = (num) => {
  * @param{number} maxRequestNum
  * */
 function RequestPool(maxRequestNum = 3) {
-  if (!isNumber(maxRequestNum)) throw new Error(errorObj.nanError);
-  if (isMinusOrZero(maxRequestNum)) throw new Error(errorObj.naMinusOrZero);
+  if (!isNumber(maxRequestNum)) throw new Error(ErrorObj.nanError);
+  if (isMinusOrZero(maxRequestNum)) throw new Error(ErrorObj.naMinusOrZero);
   this.maxRequestNum = maxRequestNum;
   this.currentRequestNum = 0;
   this.requestQueue = [];
   this.done = (cb) => {
     if (Object.prototype.toString.call(cb) !== '[object Function]') {
-      throw new Error(errorObj.doneCbError);
+      throw new Error(ErrorObj.doneCbError);
     }
     this.doneCb = cb;
   };
@@ -32,7 +32,7 @@ function RequestPool(maxRequestNum = 3) {
     if (this.currentRequestNum < this.maxRequestNum) {
       const processing = request();
       if (!processing instanceof Promise) {
-        throw new Error(errorObj.insError);
+        throw new Error(ErrorObj.insError);
       }
       this.currentRequestNum++;
       processing.finally(() => {

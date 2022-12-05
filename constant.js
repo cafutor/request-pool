@@ -1,4 +1,4 @@
-const errorObj = {
+const ErrorObj = {
   insError:
     'request method must return a promise ins @request-pool,please check the method requestPool.push()',
   doneCbError:
@@ -7,4 +7,4 @@ const errorObj = {
   naMinusOrZero: 'not a minus or zero,check new RequestPool()',
 };
 
-export default errorObj;
+export default ErrorObj;
