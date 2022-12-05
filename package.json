@@ -1,8 +1,8 @@
 {
   "name": "request-limit-pool",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "library for limit the maximum number of requests",
-  "main": "/lib/index.js",
+  "main": "./lib/index.js",
   "scripts": {
     "test": "jest",
     "build": "rm -rf lib && gulp"
