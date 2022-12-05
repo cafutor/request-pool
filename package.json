@@ -1,6 +1,6 @@
 {
   "name": "request-limit-pool",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "library for limit the maximum number of requests",
   "main": "/lib/index.js",
   "scripts": {
@@ -25,6 +25,7 @@
   "homepage": "https://github.com/cafutor/request-pool#readme",
   "devDependencies": {
     "@babel/core": "^7.20.5",
+    "@babel/preset-env": "^7.20.2",
     "babel-jest": "^29.3.1",
     "eslint": "^8.28.0",
     "eslint-config-google": "^0.14.0",
@@ -35,8 +36,5 @@
   },
   "engines": {
     "node": ">=14.0.0 <19.0.0"
-  },
-  "dependencies": {
-    "@babel/preset-env": "^7.20.2"
   }
 }
