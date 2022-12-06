@@ -1,4 +1,7 @@
-import ErrorObj from './constant';
+import ErrorObj, { finishedEventName } from './constant';
+import EventCenter from 'event-center-js';
+
+const eventCenter = new EventCenter();
 
 export const isNumber = (num) => {
   if (Object.prototype.toString.call(num) !== '[object Number]') return false;
@@ -22,11 +25,17 @@ function RequestPool(maxRequestNum = 3) {
   this.maxRequestNum = maxRequestNum;
   this.currentRequestNum = 0;
   this.requestQueue = [];
+  this.onFinish = (listener) => {
+    return eventCenter.on(finishedEventName, listener);
+  };
+  this.offFinish = () => {
+    eventCenter.off(finishedEventName);
+  };
   this.done = (cb) => {
     if (Object.prototype.toString.call(cb) !== '[object Function]') {
       throw new Error(ErrorObj.doneCbError);
     }
-    this.doneCb = cb;
+    return this.onFinish(cb);
   };
   this.push = (request) => {
     if (this.currentRequestNum < this.maxRequestNum) {
@@ -41,8 +50,8 @@ function RequestPool(maxRequestNum = 3) {
           const nextReq = this.requestQueue.pop();
           this.push(nextReq);
         }
-        if (this.currentRequestNum === 0 && this.doneCb) {
-          this.doneCb();
+        if (this.currentRequestNum === 0) {
+          eventCenter.fire(finishedEventName);
         }
       });
     } else {

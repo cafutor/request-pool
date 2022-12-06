@@ -1,6 +1,6 @@
 {
   "name": "request-limit-pool",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "library for limit the maximum number of requests",
   "main": "./lib/index.js",
   "scripts": {
@@ -36,5 +36,8 @@
   },
   "engines": {
     "node": ">=14.0.0 <19.0.0"
+  },
+  "dependencies": {
+    "event-center-js": "^1.2.1"
   }
 }

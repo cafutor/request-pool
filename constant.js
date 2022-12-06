@@ -7,4 +7,6 @@ const ErrorObj = {
   naMinusOrZero: 'not a minus or zero,check new RequestPool()',
 };
 
+export const finishedEventName = 'done';
+
 export default ErrorObj;

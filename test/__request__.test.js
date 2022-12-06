@@ -1,4 +1,4 @@
-import RequestPool, { isNumber, isMinusOrZero } from '../lib/index.js';
+import RequestPool, { isNumber, isMinusOrZero } from '../index.js';
 
 const requestPool = new RequestPool(3);
 
@@ -7,7 +7,7 @@ const requests = Array.apply(null, { length: 5 }).map(() => () =>
   new Promise((res) => {
     setTimeout(() => {
       res('value');
-    }, 1000);
+    }, 200);
   })
 );
 
@@ -38,10 +38,80 @@ test('the requests are executed sequentially', () => {
   expect(requestPool.requestQueue.length).toBe(2);
 });
 
-test('the request is finished', (done) => {
+test('requests are finished', (done) => {
   expect.assertions(1);
-  requestPool.done(() => {
+  const unsubscribe = requestPool.done(() => {
     expect(requestPool.currentRequestNum).toBe(0);
+    unsubscribe();
     done();
+  });
+});
+
+describe('test done event', () => {
+  // eslint-disable-next-line prefer-spread
+  const reqs = Array.apply(null, { length: 5 }).map(() => () =>
+    new Promise((res) => {
+      setTimeout(() => {
+        res('value');
+      }, 100);
+    })
+  );
+  const rp = new RequestPool(3);
+
+  it('should fire the done event when all requests are finished', (done) => {
+    expect.assertions(1);
+    rp.onFinish(() => {
+      expect(true).toBeTruthy();
+      rp.offFinish();
+      done();
+    });
+    reqs.forEach((request) => {
+      rp.push(request);
+    });
+  });
+
+  it('should not fire the done event', (done) => {
+    expect.assertions(0);
+    rp.done(() => {
+      done();
+    });
+    rp.onFinish(() => {
+      expect(true).toBeTruthy();
+    });
+    reqs.forEach((request) => {
+      rp.push(request);
+    });
+    rp.offFinish();
+  });
+
+  it('should fire the done event once', (done) => {
+    expect.assertions(1);
+    const off = rp.onFinish(() => {
+      expect(true).toBeTruthy();
+    });
+    off();
+    rp.onFinish(() => {
+      expect(true).toBeTruthy();
+      rp.offFinish();
+      done();
+    });
+    reqs.forEach((request) => {
+      rp.push(request);
+    });
+  });
+
+  it('should fire the done event twice', (done) => {
+    expect.assertions(2);
+    rp.onFinish(() => {
+      expect(true).toBeTruthy();
+      done();
+    });
+    rp.onFinish(() => {
+      expect(true).toBeTruthy();
+      rp.offFinish();
+    });
+    reqs.forEach((request) => {
+      rp.push(request);
+    });
   });
 });
